@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFNavigation.Commands;
+using WPFNavigation.Models;
 using WPFNavigation.Services;
 using WPFNavigation.Stores;
 
@@ -12,16 +13,27 @@ namespace WPFNavigation.ViewModels
 {
     public class AccountViewModel : ViewModelBase
     {
-        public string WelcomeMessage => "Welcome to Account Page";
+        private readonly AccountStore _accountStore;
+
+        public NavigationBarViewModel NavigationBarViewModel { get; }
+
+        public string Username => _accountStore.CurrentAccount?.Username;
+        public string Email => _accountStore.CurrentAccount?.Email; 
         public ICommand NavigateHomeCommand { get; }
 
 
-        public AccountViewModel(NavigationStore navigationStore)
+        public AccountViewModel(
+            NavigationBarViewModel navigationBarViewModel,
+            AccountStore accountStore, NavigationService<HomeViewModel> homeNavigationService)
         {
+            NavigationBarViewModel = navigationBarViewModel;
+
+            _accountStore = accountStore;
+
+
             NavigateHomeCommand =
-                new NavigateCommand<HomeViewModel>(
-                new NavigationService<HomeViewModel>(
-                    navigationStore, () => new HomeViewModel(navigationStore)));
+                new NavigateCommand<HomeViewModel>(homeNavigationService);
+
         }
 
     }

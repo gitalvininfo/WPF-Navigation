@@ -14,15 +14,17 @@ namespace WPFNavigation.ViewModels
     {
 
         public string WelcomeMessage => "Welcome Alvin Yanson";
+        public NavigationBarViewModel NavigationBarViewModel { get; }
 
         public ICommand NavigateLoginCommand { get; }
 
-
-        public HomeViewModel(NavigationStore navigationStore)
+        public HomeViewModel(
+            NavigationBarViewModel navigationBarViewModel,
+            NavigationService<LoginViewModel> loginNavigationService)
         {
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(
-                new NavigationService<LoginViewModel>(
-                    navigationStore, () => new LoginViewModel(navigationStore)));
+            NavigationBarViewModel = navigationBarViewModel;
+
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFNavigation.Commands;
+using WPFNavigation.Models;
 using WPFNavigation.Services;
 using WPFNavigation.Stores;
 
@@ -43,10 +44,9 @@ namespace WPFNavigation.ViewModels
         public ICommand LoginCommand { get; }
 
 
-        public LoginViewModel(NavigationStore navigationStore)
+        public LoginViewModel(AccountStore accountStore, NavigationService<AccountViewModel> accountNavigationService)
         {
-            LoginCommand = new LoginCommand(this, new NavigationService<AccountViewModel>(
-                    navigationStore, () => new AccountViewModel(navigationStore)));
+            LoginCommand = new LoginCommand(this, accountStore, accountNavigationService);
         }
     }
 }
