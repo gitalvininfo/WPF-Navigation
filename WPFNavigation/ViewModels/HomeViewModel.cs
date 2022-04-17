@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFNavigation.Commands;
+using WPFNavigation.Services;
 using WPFNavigation.Stores;
 
 namespace WPFNavigation.ViewModels
@@ -14,12 +15,14 @@ namespace WPFNavigation.ViewModels
 
         public string WelcomeMessage => "Welcome Alvin Yanson";
 
-        public ICommand NavigateAccountCommand { get; }
+        public ICommand NavigateLoginCommand { get; }
 
 
         public HomeViewModel(NavigationStore navigationStore)
         {
-            NavigateAccountCommand = new NavigateCommand<AccountViewModel>(navigationStore, () => new AccountViewModel(navigationStore));
+            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(
+                new NavigationService<LoginViewModel>(
+                    navigationStore, () => new LoginViewModel(navigationStore)));
         }
     }
 }

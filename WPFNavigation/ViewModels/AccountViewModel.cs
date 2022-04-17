@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFNavigation.Commands;
+using WPFNavigation.Services;
 using WPFNavigation.Stores;
 
 namespace WPFNavigation.ViewModels
@@ -17,7 +18,10 @@ namespace WPFNavigation.ViewModels
 
         public AccountViewModel(NavigationStore navigationStore)
         {
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(navigationStore, () => new HomeViewModel(navigationStore));
+            NavigateHomeCommand =
+                new NavigateCommand<HomeViewModel>(
+                new NavigationService<HomeViewModel>(
+                    navigationStore, () => new HomeViewModel(navigationStore)));
         }
 
     }
