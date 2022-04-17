@@ -11,34 +11,25 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <components:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
-
-        <Grid Grid.Row="1" MaxWidth="1000" Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0"
+        <TextBlock Grid.Row="0"
                    FontSize="28"
                    Text="Account"/>
 
-            <TextBlock Grid.Row="1" Margin="0 20 0 0"
+        <TextBlock Grid.Row="1" Margin="0 20 0 0"
                    Text="{Binding Username}"/>
 
-            <TextBlock Grid.Row="2" Margin="0 20 0 0"
+        <TextBlock Grid.Row="2" Margin="0 20 0 0"
                    Text="{Binding Email}"/>
 
 
-            <Button Grid.Row="3" Margin="0 20 0 0" Padding="5 2"
+        <Button Grid.Row="3" Margin="0 20 0 0" Padding="5 2"
                 HorizontalAlignment="Left"
                 Command="{Binding NavigateHomeCommand}"
                 Content="Home"/>
-        </Grid>
     </Grid>
 </UserControl>

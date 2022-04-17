@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WPFNavigation"
         xmlns:viewmodels="clr-namespace:WPFNavigation.ViewModels"
         xmlns:views="clr-namespace:WPFNavigation.Views"
+        xmlns:components="clr-namespace:WPFNavigation.Components"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     
@@ -23,6 +24,9 @@
                 <views:LoginView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}">
+                <components:Layout/>
+            </DataTemplate>
 
         </ContentControl.Resources>
     </ContentControl>

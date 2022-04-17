@@ -22,9 +22,9 @@ namespace WPFNavigation.ViewModels
 
         public NavigationBarViewModel(
             AccountStore accountStore,
-            NavigationService<HomeViewModel> homeNavigationService,
-            NavigationService<AccountViewModel> accountNavigationService,
-            NavigationService<LoginViewModel> loginNavigationService
+            INavigationService<HomeViewModel> homeNavigationService,
+            INavigationService<AccountViewModel> accountNavigationService,
+            INavigationService<LoginViewModel> loginNavigationService
             )
         {
             _accountStore = accountStore;

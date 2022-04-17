@@ -15,7 +15,6 @@ namespace WPFNavigation.ViewModels
     {
         private readonly AccountStore _accountStore;
 
-        public NavigationBarViewModel NavigationBarViewModel { get; }
 
         public string Username => _accountStore.CurrentAccount?.Username;
         public string Email => _accountStore.CurrentAccount?.Email; 
@@ -23,10 +22,8 @@ namespace WPFNavigation.ViewModels
 
 
         public AccountViewModel(
-            NavigationBarViewModel navigationBarViewModel,
-            AccountStore accountStore, NavigationService<HomeViewModel> homeNavigationService)
+            AccountStore accountStore, INavigationService<HomeViewModel> homeNavigationService)
         {
-            NavigationBarViewModel = navigationBarViewModel;
 
             _accountStore = accountStore;
 

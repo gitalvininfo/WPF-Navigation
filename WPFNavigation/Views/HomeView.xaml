@@ -9,14 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <components:NavigationBar Grid.Row="0" DataContext="{Binding NavigationBarViewModel}"/>
-
-        <Grid Grid.Row="1" MaxWidth="1000" Margin="20">
+       
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -36,5 +29,5 @@
                 Command="{Binding NavigateLoginCommand}"
                 Content="Login"/>
         </Grid>
-    </Grid>
+
 </UserControl>
