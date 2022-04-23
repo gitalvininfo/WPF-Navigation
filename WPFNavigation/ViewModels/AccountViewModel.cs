@@ -20,7 +20,6 @@ namespace WPFNavigation.ViewModels
         public string Email => _accountStore.CurrentAccount?.Email; 
         public ICommand NavigateHomeCommand { get; }
 
-
         public AccountViewModel(
             AccountStore accountStore, INavigationService<HomeViewModel> homeNavigationService)
         {
@@ -28,10 +27,33 @@ namespace WPFNavigation.ViewModels
             _accountStore = accountStore;
 
 
-            NavigateHomeCommand =
-                new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+
+            /* subscribes to changes in account store event named as CurrentAccountChanged */
+            _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
 
         }
 
+
+        ~AccountViewModel()
+        {
+
+        }
+
+        /* after click of logout, clear the property username and email,
+         * this is the listener for logout when click 
+         after logout what do you want to do to properties */
+        private void OnCurrentAccountChanged()
+        {
+            OnPropertyChanged(nameof(Username));
+            OnPropertyChanged(nameof(Email));
+        }
+
+        public override void Dispose()
+        {
+            _accountStore.CurrentAccountChanged -= OnCurrentAccountChanged;
+
+            base.Dispose();
+        }
     }
 }

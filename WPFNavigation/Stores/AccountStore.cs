@@ -10,6 +10,7 @@ namespace WPFNavigation.Stores
     public class AccountStore
     {
         private Account _currentAccount;
+        public event Action CurrentAccountChanged;
 
         public Account CurrentAccount 
         {
@@ -17,10 +18,19 @@ namespace WPFNavigation.Stores
             set
             {
                 _currentAccount = value;
+                CurrentAccountChanged?.Invoke();
+
             }
         }
 
         public bool IsLoggedIn => CurrentAccount != null;
+
+
+
+        public void Logout()
+        {
+            CurrentAccount = null;
+        }
 
     }
 }

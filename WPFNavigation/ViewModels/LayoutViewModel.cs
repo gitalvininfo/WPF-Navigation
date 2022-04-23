@@ -19,5 +19,13 @@ namespace WPFNavigation.ViewModels
         }
 
 
+        public override void Dispose()
+        {
+            NavigationBarViewModel.Dispose();
+            ContentViewModel.Dispose();
+            base.Dispose();
+        }
+
+
     }
 }

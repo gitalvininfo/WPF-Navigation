@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WPFNavigation.ViewModels
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
