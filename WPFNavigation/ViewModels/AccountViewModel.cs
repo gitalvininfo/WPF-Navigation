@@ -21,24 +21,19 @@ namespace WPFNavigation.ViewModels
         public ICommand NavigateHomeCommand { get; }
 
         public AccountViewModel(
-            AccountStore accountStore, INavigationService<HomeViewModel> homeNavigationService)
+            AccountStore accountStore, INavigationService homeNavigationService)
         {
 
             _accountStore = accountStore;
 
 
-            NavigateHomeCommand = new NavigateCommand<HomeViewModel>(homeNavigationService);
+            NavigateHomeCommand = new NavigateCommand(homeNavigationService);
 
             /* subscribes to changes in account store event named as CurrentAccountChanged */
             _accountStore.CurrentAccountChanged += OnCurrentAccountChanged;
 
         }
 
-
-        ~AccountViewModel()
-        {
-
-        }
 
         /* after click of logout, clear the property username and email,
          * this is the listener for logout when click 

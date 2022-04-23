@@ -15,12 +15,12 @@ namespace WPFNavigation.Commands
     {
         private readonly LoginViewModel _loginViewModel;
         private readonly AccountStore _accountStore;
-        private readonly INavigationService<AccountViewModel> _navigationService;
+        private readonly INavigationService _navigationService;
 
         public LoginCommand(
             LoginViewModel loginViewModel, 
             AccountStore accountStore,
-            INavigationService<AccountViewModel> navigationService)
+            INavigationService navigationService)
         {
             _loginViewModel = loginViewModel;
             _accountStore = accountStore;

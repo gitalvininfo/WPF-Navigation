@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:WPFNavigation"
         xmlns:viewmodels="clr-namespace:WPFNavigation.ViewModels"
         xmlns:views="clr-namespace:WPFNavigation.Views"
-        xmlns:components="clr-namespace:WPFNavigation.Components"
+        xmlns:components="clr-namespace:WPFNavigation.Components" 
+        xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
-    <ContentControl Content="{Binding CurrentViewModel}">
-        <ContentControl.Resources>
+
+    <Grid>
+        
+        <Grid.Resources>
             <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
                 <views:HomeView/>
             </DataTemplate>
@@ -27,7 +29,13 @@
             <DataTemplate DataType="{x:Type viewmodels:LayoutViewModel}">
                 <components:Layout/>
             </DataTemplate>
+        </Grid.Resources>
 
-        </ContentControl.Resources>
-    </ContentControl>
+        <custom:Modal Panel.ZIndex="1" IsOpen="{Binding IsOpen}">
+            <ContentControl Content="{Binding CurrentModalViewModel}" />
+        </custom:Modal>
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
+
+    </Grid>
 </Window>

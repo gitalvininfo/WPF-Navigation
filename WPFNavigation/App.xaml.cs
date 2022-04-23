@@ -18,11 +18,13 @@ namespace WPFNavigation
     {
         private readonly NavigationStore _navigationStore;
         private readonly AccountStore _accountStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
 
         public App()
         {
             _navigationStore = new NavigationStore();
             _accountStore = new AccountStore();
+            _modalNavigationStore = new ModalNavigationStore();
 
         }
 
@@ -36,7 +38,7 @@ namespace WPFNavigation
                 );
         }
 
-        private INavigationService<HomeViewModel> CreateHomeNavigationService()
+        private INavigationService CreateHomeNavigationService()
         {
             return new LayoutNavigationService<HomeViewModel>(
                 _navigationStore, 
@@ -45,14 +47,19 @@ namespace WPFNavigation
         }
 
 
-        private INavigationService<LoginViewModel> CreateLoginNavigationService()
+        private INavigationService CreateLoginNavigationService()
         {
-            return new NavigationService<LoginViewModel>(
-                _navigationStore, () =>
-                new LoginViewModel(_accountStore, CreateAccountNavigationService()));
+            CompositeNavigationService navigationService = new CompositeNavigationService(
+                    new CloseModalNavigationService(_modalNavigationStore),
+                    CreateAccountNavigationService()
+                );
+
+            return new ModalNavigationService<LoginViewModel>(
+                _modalNavigationStore, 
+                () => new LoginViewModel(_accountStore, navigationService));
         }
 
-        private INavigationService<AccountViewModel> CreateAccountNavigationService()
+        private INavigationService CreateAccountNavigationService()
         {
             return new LayoutNavigationService<AccountViewModel>(
                 _navigationStore, 
@@ -65,12 +72,12 @@ namespace WPFNavigation
         protected override void OnStartup(StartupEventArgs e)
         {
 
-            INavigationService<HomeViewModel> homeNavigationService = CreateHomeNavigationService();
+            INavigationService homeNavigationService = CreateHomeNavigationService();
             homeNavigationService.Navigate();
-            
+
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(_navigationStore)
+                DataContext = new MainViewModel(_navigationStore, _modalNavigationStore)
             };
 
             MainWindow.Show();

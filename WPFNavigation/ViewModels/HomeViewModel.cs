@@ -18,10 +18,10 @@ namespace WPFNavigation.ViewModels
         public ICommand NavigateLoginCommand { get; }
 
         public HomeViewModel(
-            INavigationService<LoginViewModel> loginNavigationService)
+            INavigationService loginNavigationService)
         {
 
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            NavigateLoginCommand = new NavigateCommand(loginNavigationService);
         }
     }
 }
