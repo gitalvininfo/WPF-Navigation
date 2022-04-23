@@ -25,6 +25,7 @@ namespace WPFNavigation
             IServiceCollection services = new ServiceCollection();
 
             services.AddSingleton<AccountStore>();
+            services.AddSingleton<PeopleStore>();
             services.AddSingleton<NavigationStore>();
             services.AddSingleton<ModalNavigationStore>();
 
@@ -40,6 +41,15 @@ namespace WPFNavigation
 
             services.AddTransient<LoginViewModel>(CreateLoginViewModel);
 
+            services.AddTransient<PeopleListingViewModel>(s => new PeopleListingViewModel(
+                s.GetRequiredService<PeopleStore>(),
+                CreateAddPersonNavigationService(s)));
+
+            services.AddTransient<AddPersonViewModel>(s => new AddPersonViewModel(
+                    s.GetRequiredService<PeopleStore>(),
+                    s.GetRequiredService<CloseModalNavigationService>()
+                ));
+
             services.AddSingleton<NavigationBarViewModel>(CreateNavigationBarViewModel);
             services.AddSingleton<MainViewModel>();
 
@@ -50,6 +60,13 @@ namespace WPFNavigation
 
             _serviceProvider =  services.BuildServiceProvider();
 
+        }
+
+        private INavigationService CreateAddPersonNavigationService(IServiceProvider serviceProvider)
+        {
+            return new ModalNavigationService<AddPersonViewModel>(
+                 serviceProvider.GetRequiredService<ModalNavigationStore>(),
+                () => serviceProvider.GetRequiredService<AddPersonViewModel>());
         }
 
         private LoginViewModel CreateLoginViewModel(IServiceProvider serviceProvider)
@@ -71,8 +88,17 @@ namespace WPFNavigation
                 serviceProvider.GetRequiredService<AccountStore>(),
                 CreateHomeNavigationService(serviceProvider),
                 CreateAccountNavigationService(serviceProvider),
-                CreateLoginNavigationService(serviceProvider)
+                CreateLoginNavigationService(serviceProvider),
+                CreatePeopleListingNavigationService(serviceProvider)
                 );
+        }
+
+        private INavigationService CreatePeopleListingNavigationService(IServiceProvider serviceProvider)
+        {
+            return new LayoutNavigationService<PeopleListingViewModel>(
+                serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<PeopleListingViewModel>(),
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
         }
 
         private INavigationService CreateHomeNavigationService(IServiceProvider serviceProvider)
@@ -86,16 +112,16 @@ namespace WPFNavigation
 
         private INavigationService CreateLoginNavigationService(IServiceProvider serviceProvider)
         {
-            ModalNavigationStore modalNavigationStore = serviceProvider.GetRequiredService<ModalNavigationStore>();
+            //ModalNavigationStore modalNavigationStore = serviceProvider.GetRequiredService<ModalNavigationStore>();
             return new ModalNavigationService<LoginViewModel>(
-                modalNavigationStore, 
+                serviceProvider.GetRequiredService<ModalNavigationStore>(), 
                 () => serviceProvider.GetRequiredService<LoginViewModel>());
         }
 
         private INavigationService CreateAccountNavigationService(IServiceProvider serviceProvider)
         {
 
-            AccountStore accountStore = serviceProvider.GetRequiredService<AccountStore>();
+            //AccountStore accountStore = serviceProvider.GetRequiredService<AccountStore>();
 
             return new LayoutNavigationService<AccountViewModel>(
                 serviceProvider.GetRequiredService<NavigationStore>(), 

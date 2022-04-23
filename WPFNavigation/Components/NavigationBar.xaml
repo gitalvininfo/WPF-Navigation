@@ -44,6 +44,7 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Column="0" Text="Navigation Demo" Foreground="White" FontSize="14"/>
@@ -57,19 +58,26 @@
         <Button 
             Margin="10 0 0 0"
             Grid.Column="2" 
+            Content="People" 
+            Command="{Binding NavigatePeopleListingCommand}"/>
+
+
+        <Button 
+            Margin="10 0 0 0"
+            Grid.Column="3" 
             Content="Login" 
             Command="{Binding NavigateLoginCommand}"/>
 
         <Button 
             Margin="10 0 0 0"
-            Grid.Column="3" 
+            Grid.Column="4" 
             Content="Account" 
             Command="{Binding NavigateAccountCommand}"
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
         <Button 
             Margin="10 0 0 0"
-            Grid.Column="4" 
+            Grid.Column="5" 
             Content="Logout" 
             Command="{Binding LogoutCommand}"
             Visibility="{Binding IsLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}}"/>
